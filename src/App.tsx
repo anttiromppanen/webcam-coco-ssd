@@ -1,6 +1,6 @@
 import "@tensorflow/tfjs-backend-cpu";
 import "@tensorflow/tfjs-backend-webgl";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import useObjectDetection from "./hooks/useObjectDetection";
 import { isDesktop } from "react-device-detect";
@@ -8,9 +8,12 @@ import { isDesktop } from "react-device-detect";
 function App() {
   const webCamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [cameraFacingMode, setCameraFacingMode] = useState<
+    "user" | "environment"
+  >("environment");
 
   const { isModelLoading } = useObjectDetection(webCamRef, canvasRef);
-  console.log("isDesktop", isDesktop);
+
   return (
     <div
       style={{
@@ -42,6 +45,16 @@ function App() {
             flexDirection: "column",
           }}
         >
+          <button
+            type="button"
+            onClick={() =>
+              setCameraFacingMode((state) =>
+                state === "user" ? "environment" : "user"
+              )
+            }
+          >
+            Toggle camera
+          </button>
           <div
             style={{
               display: "flex",
@@ -52,6 +65,7 @@ function App() {
           >
             <Webcam
               ref={webCamRef}
+              videoConstraints={{ facingMode: cameraFacingMode }}
               width="1024"
               height="768"
               style={{
