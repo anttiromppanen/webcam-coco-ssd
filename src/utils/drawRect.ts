@@ -23,20 +23,20 @@ function drawRect(
     const label = predication.class.toUpperCase() + " - " + score;
 
     // padding settings
-    const paddingX = 10; // Horizontal padding for the label background
-    const paddingY = 5; // Vertical padding for the label background
+    const paddingX = 4; // Horizontal padding for the label background
+    const paddingY = 2; // Vertical padding for the label background
 
     // draw bounding box
-    context.font = "16px Arial";
+    context.font = "10px Arial";
     context.strokeStyle = boxColor;
-    context.lineWidth = 3;
+    context.lineWidth = 1;
     context.strokeRect(x, y, width, height);
 
     // draw label bg
     context.fillStyle = boxColor;
     const textW = context.measureText(label).width;
-    context.fillRect(x, y, textW, -16);
-    context.fillRect(x, y - 16 - paddingY, textW + paddingX * 2, 16 + paddingY);
+    context.fillRect(x, y, textW, -10);
+    context.fillRect(x, y - 10 - paddingY, textW + paddingX * 2, 10 + paddingY);
 
     // text on top
     context.fillStyle = "black";

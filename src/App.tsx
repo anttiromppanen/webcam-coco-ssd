@@ -54,6 +54,7 @@ function App() {
           >
             <button
               type="button"
+              aria-label="Switch camera"
               onClick={() =>
                 setCameraFacingMode((state) =>
                   state === "user" ? "environment" : "user"
@@ -64,17 +65,23 @@ function App() {
                 top: 20,
                 right: 20,
                 zIndex: 99999,
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                backgroundImage:
+                  "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
                 borderRadius: "100%",
                 border: "none",
                 cursor: "pointer",
+                width: "50px",
+                height: "50px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               <CameraIcon
                 style={{
                   width: "40px",
                   height: "40px",
-                  color: "black",
+                  color: "white",
                   margin: "5px",
                 }}
               />
