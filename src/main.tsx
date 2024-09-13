@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import AppPrevMock from "./AppPrevMock.tsx";
+import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppPrevMock />
+    <App />
   </StrictMode>
 );
