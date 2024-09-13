@@ -1,97 +1,14 @@
-import Webcam from "react-webcam";
 import "@tensorflow/tfjs-backend-cpu";
 import "@tensorflow/tfjs-backend-webgl";
-import {
-  load as cocoSSDLoad,
-  type ObjectDetection,
-} from "@tensorflow-models/coco-ssd";
-import { useCallback, useEffect, useRef, useState } from "react";
-import drawRect from "./utils/drawRect";
-
-let detectInterval: NodeJS.Timeout;
+import { useRef } from "react";
+import Webcam from "react-webcam";
+import useObjectDetection from "./hooks/useObjectDetection";
 
 function App() {
-  const [isModelLoading, setIsModelLoading] = useState(false);
   const webCamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  function showMyVideo() {
-    if (
-      webCamRef.current !== null &&
-      webCamRef.current.video?.readyState === 4
-    ) {
-      // Get video properties
-      const myVideoWidth = webCamRef.current.video.videoWidth;
-      const myVideoHeight = webCamRef.current.video.videoHeight;
-
-      // Set video width and height
-      webCamRef.current.video.width = myVideoWidth;
-      webCamRef.current.video.height = myVideoHeight;
-
-      if (canvasRef.current) {
-        canvasRef.current.width = myVideoWidth;
-        canvasRef.current.height = myVideoHeight;
-      }
-    }
-  }
-
-  async function runObjectDetection(net: ObjectDetection) {
-    if (
-      canvasRef.current &&
-      webCamRef.current !== null &&
-      webCamRef.current.video?.readyState === 4
-    ) {
-      const videoWidth = webCamRef.current.video.videoWidth;
-      const videoHeight = webCamRef.current.video.videoHeight;
-
-      // Set canvas height and width
-      canvasRef.current.width = videoWidth;
-      canvasRef.current.height = videoHeight;
-
-      // Make detections
-      const detectedObjects = await net.detect(
-        webCamRef.current.video,
-        undefined,
-        0.4
-      );
-
-      // console.log("Detect data: ", detectedObjects);
-
-      // Draw mesh
-      const context = canvasRef.current.getContext("2d");
-
-      if (context) {
-        // Update drawing utility
-        context.clearRect(0, 0, videoWidth, videoHeight);
-        drawRect(detectedObjects, context);
-      }
-    }
-  }
-
-  async function loadModel() {
-    setIsModelLoading(true);
-    const model = await cocoSSDLoad();
-    setIsModelLoading(false);
-    return model;
-  }
-
-  const objectDetectionLoop = useCallback((net: ObjectDetection) => {
-    detectInterval = setInterval(() => {
-      runObjectDetection(net);
-    }, 10);
-  }, []);
-
-  useEffect(() => {
-    // async await store result of loadModel into variable
-    const runModel = async () => {
-      showMyVideo();
-      const model = await loadModel();
-      objectDetectionLoop(model);
-    };
-
-    runModel();
-    return () => clearInterval(detectInterval);
-  }, [objectDetectionLoop]);
+  const { isModelLoading } = useObjectDetection(webCamRef, canvasRef);
 
   return (
     <div
