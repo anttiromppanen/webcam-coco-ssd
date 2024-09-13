@@ -3,7 +3,7 @@ import "@tensorflow/tfjs-backend-webgl";
 import { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import useObjectDetection from "./hooks/useObjectDetection";
-import { isDesktop } from "react-device-detect";
+// import { isDesktop } from "react-device-detect";
 
 function App() {
   const webCamRef = useRef<Webcam>(null);
