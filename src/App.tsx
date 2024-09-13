@@ -15,8 +15,6 @@ function App() {
 
   const { isModelLoading } = useObjectDetection(webcamRef, canvasRef);
 
-  navigator.mediaDevices.getUserMedia({ video: true });
-
   return (
     <div
       style={{
