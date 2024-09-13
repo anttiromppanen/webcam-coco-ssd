@@ -1,17 +1,17 @@
 import "@tensorflow/tfjs-backend-cpu";
 import "@tensorflow/tfjs-backend-webgl";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Webcam from "react-webcam";
-import useObjectDetection from "./hooks/useObjectDetection";
-import ObjectDetectionCanvas from "./components/ObjectDetectionCanvas";
 import Camera from "./components/Camera";
+import ObjectDetectionCanvas from "./components/ObjectDetectionCanvas";
+import useObjectDetection from "./hooks/useObjectDetection";
 
 function App() {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [cameraFacingMode, setCameraFacingMode] = useState<
-    "user" | "environment"
-  >("user");
+  // const [cameraFacingMode, setCameraFacingMode] = useState<
+  //   "user" | "environment"
+  // >("user");
 
   const { isModelLoading } = useObjectDetection(webcamRef, canvasRef);
 
@@ -55,15 +55,10 @@ function App() {
               zIndex: 99999,
               backgroundColor: "white",
             }}
-            onClick={() =>
-              setCameraFacingMode((state) =>
-                state === "user" ? "environment" : "user"
-              )
-            }
           >
             Switch Camera
           </button>
-          <Camera ref={webcamRef} facingMode={cameraFacingMode} />
+          <Camera ref={webcamRef} />
           <ObjectDetectionCanvas ref={canvasRef} />
         </main>
       )}
