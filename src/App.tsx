@@ -3,13 +3,14 @@ import "@tensorflow/tfjs-backend-webgl";
 import { useRef } from "react";
 import Webcam from "react-webcam";
 import useObjectDetection from "./hooks/useObjectDetection";
+import { isDesktop } from "react-device-detect";
 
 function App() {
   const webCamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const { isModelLoading } = useObjectDetection(webCamRef, canvasRef);
-
+  console.log("isDesktop", isDesktop);
   return (
     <div
       style={{
