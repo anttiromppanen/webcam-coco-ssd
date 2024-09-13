@@ -1,0 +1,9 @@
+.canvas_lg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  bottom: 0;
+  z-index: 99998;
+  object-fit: cover;
+}

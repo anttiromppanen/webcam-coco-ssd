@@ -8,16 +8,16 @@ import drawRect from "./drawRect";
 
 export async function runObjectDetection(
   net: ObjectDetection,
-  webCamRef: RefObject<Webcam>,
+  webcamRef: RefObject<Webcam>,
   canvasRef: RefObject<HTMLCanvasElement>
 ) {
   if (
     canvasRef.current &&
-    webCamRef.current !== null &&
-    webCamRef.current.video?.readyState === 4
+    webcamRef.current !== null &&
+    webcamRef.current.video?.readyState === 4
   ) {
-    const videoWidth = webCamRef.current.video.videoWidth;
-    const videoHeight = webCamRef.current.video.videoHeight;
+    const videoWidth = webcamRef.current.video.videoWidth;
+    const videoHeight = webcamRef.current.video.videoHeight;
 
     // Set canvas height and width
     canvasRef.current.width = videoWidth;
@@ -25,7 +25,7 @@ export async function runObjectDetection(
 
     // Make detections
     const detectedObjects = await net.detect(
-      webCamRef.current.video,
+      webcamRef.current.video,
       undefined,
       0.4
     );

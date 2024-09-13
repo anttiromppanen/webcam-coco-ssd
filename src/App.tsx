@@ -3,16 +3,17 @@ import "@tensorflow/tfjs-backend-webgl";
 import { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import useObjectDetection from "./hooks/useObjectDetection";
-// import { isDesktop } from "react-device-detect";
+import ObjectDetectionCanvas from "./components/ObjectDetectionCanvas";
+import Camera from "./components/Camera";
 
 function App() {
-  const webCamRef = useRef<Webcam>(null);
+  const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cameraFacingMode, setCameraFacingMode] = useState<
     "user" | "environment"
-  >("environment");
+  >("user");
 
-  const { isModelLoading } = useObjectDetection(webCamRef, canvasRef);
+  const { isModelLoading } = useObjectDetection(webcamRef, canvasRef);
 
   return (
     <div
@@ -47,51 +48,23 @@ function App() {
         >
           <button
             type="button"
+            style={{
+              position: "fixed",
+              top: 20,
+              right: 20,
+              zIndex: 99999,
+              backgroundColor: "white",
+            }}
             onClick={() =>
               setCameraFacingMode((state) =>
                 state === "user" ? "environment" : "user"
               )
             }
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              zIndex: 99999,
-              transform: "translate(-50%, -50%)",
-            }}
           >
-            Toggle camera
+            Switch Camera
           </button>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-              position: "relative",
-            }}
-          >
-            <Webcam
-              ref={webCamRef}
-              videoConstraints={{ facingMode: cameraFacingMode }}
-              width="1024"
-              height="768"
-              style={{
-                borderRadius: 10,
-              }}
-            />
-            <canvas
-              ref={canvasRef}
-              style={{
-                position: "absolute",
-                width: 1024,
-                height: 768,
-                left: "50%",
-                transform: "translateX(-50%)",
-                bottom: 0,
-                zIndex: 99998,
-              }}
-            />
-          </div>
+          <Camera ref={webcamRef} facingMode={cameraFacingMode} />
+          <ObjectDetectionCanvas ref={canvasRef} />
         </main>
       )}
     </div>

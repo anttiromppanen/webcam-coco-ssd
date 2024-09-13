@@ -1,0 +1,11 @@
+.camera_lg {
+  border-radius: 10px;
+  width: 1024px;
+  height: 768px;
+}
+
+.camera_sm {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}

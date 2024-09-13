@@ -7,7 +7,7 @@ import showMyVideo from "../utils/videoUtils";
 let detectInterval: NodeJS.Timeout;
 
 function useObjectDetection(
-  webCamRef: RefObject<Webcam>,
+  webcamRef: RefObject<Webcam>,
   canvasRef: RefObject<HTMLCanvasElement>
 ) {
   const [isModelLoading, setIsModelLoading] = useState(false);
@@ -15,16 +15,16 @@ function useObjectDetection(
   const objectDetectionLoop = useCallback(
     (net: ObjectDetection) => {
       detectInterval = setInterval(() => {
-        runObjectDetection(net, webCamRef, canvasRef);
+        runObjectDetection(net, webcamRef, canvasRef);
       }, 10);
     },
-    [canvasRef, webCamRef]
+    [canvasRef, webcamRef]
   );
 
   useEffect(() => {
     // async await store result of loadModel into variable
     const runModel = async () => {
-      showMyVideo(webCamRef, canvasRef);
+      showMyVideo(webcamRef, canvasRef);
       // const model = await loadModel(setIsModelLoading);
       const model = await loadModel(setIsModelLoading);
       objectDetectionLoop(model);
@@ -32,7 +32,7 @@ function useObjectDetection(
 
     runModel();
     return () => clearInterval(detectInterval);
-  }, [objectDetectionLoop, canvasRef, webCamRef]);
+  }, [objectDetectionLoop, canvasRef, webcamRef]);
 
   return { isModelLoading };
 }
