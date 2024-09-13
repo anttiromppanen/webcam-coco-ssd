@@ -65,8 +65,8 @@ function App() {
                 top: 20,
                 right: 20,
                 zIndex: 99999,
-                backgroundImage:
-                  "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
                 borderRadius: "100%",
                 border: "none",
                 cursor: "pointer",
@@ -81,8 +81,8 @@ function App() {
                 style={{
                   width: "40px",
                   height: "40px",
-                  color: "white",
-                  margin: "5px",
+                  color: "black",
+                  opacity: 0.8,
                 }}
               />
             </button>
