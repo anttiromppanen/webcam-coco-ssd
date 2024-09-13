@@ -52,6 +52,13 @@ function App() {
                 state === "user" ? "environment" : "user"
               )
             }
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              zIndex: 99999,
+              transform: "translate(-50%, -50%)",
+            }}
           >
             Toggle camera
           </button>
@@ -81,7 +88,7 @@ function App() {
                 left: "50%",
                 transform: "translateX(-50%)",
                 bottom: 0,
-                zIndex: 99999,
+                zIndex: 99998,
               }}
             />
           </div>
