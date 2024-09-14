@@ -18,7 +18,7 @@ const Camera = forwardRef(
       <Webcam
         ref={ref as RefObject<Webcam>}
         videoConstraints={{ facingMode: cameraModeSelector[cameraFacingMode] }}
-        onUserMediaError={(error) => setIsUserMediaError(true)}
+        onUserMediaError={() => setIsUserMediaError(true)}
         className={styles.camera_sm}
       />
     );
