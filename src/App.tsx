@@ -8,10 +8,12 @@ import ObjectDetectionCanvas from "./components/ObjectDetectionCanvas";
 import useObjectDetection from "./hooks/useObjectDetection";
 import LoadingScreen from "./components/LoadingScreen";
 import { CameraIcon } from "@heroicons/react/16/solid";
+import UserMediaError from "./components/UserMediaError";
 
 function App() {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isUserMediaError, setIsUserMediaError] = useState(false);
   const [cameraFacingMode, setCameraFacingMode] = useState<
     "user" | "environment"
   >("user");
@@ -37,7 +39,8 @@ function App() {
             <LoadingScreen />
           </motion.div>
         )}
-        {!isModelLoading && (
+        {!isModelLoading && isUserMediaError && <UserMediaError />}
+        {!isModelLoading && !isUserMediaError && (
           <motion.main
             key="main"
             initial={{ opacity: 0 }}
@@ -86,7 +89,11 @@ function App() {
                 }}
               />
             </button>
-            <Camera ref={webcamRef} cameraFacingMode={cameraFacingMode} />
+            <Camera
+              ref={webcamRef}
+              cameraFacingMode={cameraFacingMode}
+              setIsUserMediaError={setIsUserMediaError}
+            />
             <ObjectDetectionCanvas ref={canvasRef} />
           </motion.main>
         )}

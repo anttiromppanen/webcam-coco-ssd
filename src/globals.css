@@ -6,6 +6,7 @@ body {
   padding: 0;
   height: auto;
   font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
 }
 
 body {
@@ -24,4 +25,10 @@ body {
 
 .bg__gradient {
   background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 1.1rem;
+  }
 }

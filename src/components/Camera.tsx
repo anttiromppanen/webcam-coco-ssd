@@ -1,6 +1,11 @@
-import { forwardRef, RefObject } from "react";
+import { Dispatch, forwardRef, RefObject, SetStateAction } from "react";
 import Webcam from "react-webcam";
 import styles from "./Camera.module.css";
+
+interface CameraProps {
+  cameraFacingMode: "user" | "environment";
+  setIsUserMediaError: Dispatch<SetStateAction<boolean>>;
+}
 
 const cameraModeSelector = {
   user: "user",
@@ -8,11 +13,12 @@ const cameraModeSelector = {
 };
 
 const Camera = forwardRef(
-  ({ cameraFacingMode }: { cameraFacingMode: "user" | "environment" }, ref) => {
+  ({ cameraFacingMode, setIsUserMediaError }: CameraProps, ref) => {
     return (
       <Webcam
         ref={ref as RefObject<Webcam>}
         videoConstraints={{ facingMode: cameraModeSelector[cameraFacingMode] }}
+        onUserMediaError={(error) => setIsUserMediaError(true)}
         className={styles.camera_sm}
       />
     );
